@@ -1,0 +1,23 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "cn.thecoldworld.thecoldworldlib.mixins",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "ClientConnectionMixin",
+    "ClientLoginPacketListenerInjector",
+    "ClientPlayPacketListenerInjector",
+    "EnterConfigurationC2SPacketMixin",
+    "LoginStatesMixin",
+    "MinecraftServerMixin",
+    "PlayerManagerMixin",
+    "PlayStateFactoriesMixin",
+    "ServerLoginNetworkHandlerMixin",
+    "ServerLoginPacketListenerInjector",
+    "ServerPlayNetworkHandlerMixin",
+    "ServerPlayPacketListenerInjector"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

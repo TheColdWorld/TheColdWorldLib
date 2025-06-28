@@ -1,0 +1,9 @@
+{
+  "disconnect.thecoldworldlib.notinstall.requiredmod": "[TheColdWorldLib] This Server requires mod %1$s version  %2$s but you're not installed \n you should install it from %3$s to join in the server",
+  "disconnect.thecoldworldlib.notinstall.respackrequiredmod": "[TheColdWorldLib] This Server requires mod %1$s version  %2$s but you're not installed\n you should install it from %3$s to join in the server",
+  "disconnect.thecoldworldlib.wrongversion": "[TheColdWorldLib] This Server requires mod TheColdWorldLib version  %1$s but you installed an incompatible version(%2$s)\n you should reinstall it from https://modrinth.com/project/thecoldworldlib to join in the server",
+  "disconnect.thecoldworldlib.wrongversion.requiredmod": "[TheColdWorldLib] This Server requires mod %1$s version  %2$s but you installed an incompatible version(%3$s)\n you should reinstall it from %4$s to join in the server",
+  "chat.thecoldworldlib.optionalmod": "This server installed %1$d optional mod but you're not installed,you can install it from the following link(s):\n",
+  "chat.thecoldworldlib.optionalmod.content": "%1$s(%2$s):%3$s\n",
+  "hover.thecoldworld.download": "click to download"
+}

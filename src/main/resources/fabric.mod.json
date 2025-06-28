@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "thecoldworldlib",
+  "version": "${version}",
+  "name": "TheColdWorldLib",
+  "description": "",
+  "authors": [
+    "TheColdWorld"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "cn.thecoldworld.thecoldworldlib.entrypoints.Client"
+    ],
+    "main": [
+      "cn.thecoldworld.thecoldworldlib.entrypoints.Universal"
+    ]
+  },
+  "mixins": [
+    "thecoldworld.mixins.json",
+    {
+      "config": "thecoldworld.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "${minecraft_version}"
+  }
+}

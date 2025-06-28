@@ -1,0 +1,9 @@
+{
+  "disconnect.thecoldworldlib.wrongversion": "[TheColdWorldLib] 服务器需要TheColdWorldLib %s,但是你安装了不合适的版本(%s)\n 从https://modrinth.com/project/thecoldworldlib处下载正确的版本以加入服务器",
+  "disconnect.thecoldworldlib.notinstall.requiredmod": "[TheColdWorldLib] 服务器需要 %s  %s 但是你并没有安装 \n 从 %s 处下载正确的版本以加入服务器",
+  "disconnect.thecoldworldlib.notinstall.respackrequiredmod": "[TheColdWorldLib] 服务器需要 %s  %s 但是你并没有安装 \n 从 %s 处下载正确的版本或对应资源包以加入服务器",
+  "disconnect.thecoldworldlib.wrongversion.requiredmod": "[TheColdWorldLib] 服务器需要 %s  %s 但是你安装了不合适的版本(%s)\n 从 %s 处下载正确的版本以加入服务器",
+  "chat.thecoldworldlib.optionalmod": "服务器已经安装了%1$d个你未安装的可选模组，你可以点击下面的链接去下载:\n",
+  "chat.thecoldworldlib.optionalmod.content": "%1$s(%2$s):%3$s\n",
+  "hover.thecoldworld.download": "点击下载"
+}
