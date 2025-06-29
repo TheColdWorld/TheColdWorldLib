@@ -1,6 +1,7 @@
 package cn.thecoldworld.thecoldworldlib.submod;
 
-import cn.thecoldworld.thecoldworldlib.Utils;
+import cn.thecoldworld.thecoldworldlib.Vars;
+import cn.thecoldworld.thecoldworldlib.utils.ErrorUtil;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
@@ -86,11 +87,14 @@ public class Mod {
         try {
             String modTypeStr = ops.getStringValue(ops.get(input, "modType").getOrThrow()).getOrThrow();
             Decoder<? extends Mod> decoder = ModTypes.get(modTypeStr);
-            if (decoder == null) return DataResult.error(() -> "Unexpected mod type " + modTypeStr);
+            if (decoder == null) {
+                Vars.LOGGER.error("Unexpected mod type " + modTypeStr);
+                return DataResult.error(() -> "Unexpected mod type " + modTypeStr);
+            }
             Pair<? extends Mod, T> dataResult = decoder.decode(ops, input).getOrThrow();
             return DataResult.success(Pair.of(dataResult.getFirst(), dataResult.getSecond()));
         } catch (Throwable e) {
-            return Utils.CodecOnException(e);
+            return ErrorUtil.CodecOnException(e);
         }
     }
 
@@ -109,7 +113,7 @@ public class Mod {
             T t5 = ops.set(t4, "downloadLink", ops.createString(this.downloadLink.toString()));
             return DataResult.success(t5);
         } catch (Throwable e) {
-            return Utils.CodecOnException(e);
+            return ErrorUtil.CodecOnException(e);
         }
     }
 

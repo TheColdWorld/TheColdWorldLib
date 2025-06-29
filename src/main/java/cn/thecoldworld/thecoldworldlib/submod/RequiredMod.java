@@ -1,6 +1,6 @@
 package cn.thecoldworld.thecoldworldlib.submod;
 
-import cn.thecoldworld.thecoldworldlib.Utils;
+import cn.thecoldworld.thecoldworldlib.utils.ErrorUtil;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.Decoder;
@@ -18,7 +18,7 @@ public final class RequiredMod extends Mod {
             try {
                 return DataResult.success(Pair.of(new RequiredMod(dynamicOps, t), t));
             } catch (Exception e) {
-                return Utils.CodecOnException(e);
+                return ErrorUtil.CodecOnException(e);
             }
         }
     };

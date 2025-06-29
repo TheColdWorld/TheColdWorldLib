@@ -55,6 +55,7 @@ public class HandShakePacket implements Packet<ServerLoginPacketListener> {
             Optional<NbtCompound> modnbt = n.asCompound();
             modnbt.ifPresent(nbtCompound -> manager.register(Mod.CODEC.decode(NbtOps.INSTANCE, nbtCompound).getOrThrow().getFirst()));
         }
+
         manager.freeze();
         try {
             this.Version = net.fabricmc.loader.api.Version.parse(this.VersionString);

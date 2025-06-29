@@ -4,8 +4,8 @@ import cn.thecoldworld.thecoldworldlib.Vars;
 import cn.thecoldworld.thecoldworldlib.interfaces.mixin.IHandshakePacketAccesser;
 import cn.thecoldworld.thecoldworldlib.networking.listeners.ServerLoginPacketListener;
 import cn.thecoldworld.thecoldworldlib.networking.packet.c2s.HandShakePacket;
-import cn.thecoldworld.thecoldworldlib.submod.Mod;
 import cn.thecoldworld.thecoldworldlib.submod.ModManager;
+import cn.thecoldworld.thecoldworldlib.submod.RequiredMod;
 import com.mojang.authlib.GameProfile;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.network.ClientConnection;
@@ -50,7 +50,7 @@ public abstract class ServerLoginNetworkHandlerMixin implements ServerLoginPacke
                 ci.cancel();
             } else {
                 ModManager manager = ModManager.getInstance();
-                for (Mod mod : handShakePacket.manager) {
+                handShakePacket.manager.stream().filter(m -> m instanceof RequiredMod).forEach(mod -> {
                     var opt = manager.get(mod.modid);
                     if (opt.isEmpty()) {
                         disconnect.accept(mod.createNotintalledText());
@@ -62,7 +62,7 @@ public abstract class ServerLoginNetworkHandlerMixin implements ServerLoginPacke
                         ci.cancel();
                         return;
                     }
-                }
+                });
             }
         }
     }
