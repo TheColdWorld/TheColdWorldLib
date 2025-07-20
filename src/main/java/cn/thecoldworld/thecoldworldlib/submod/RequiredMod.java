@@ -40,11 +40,17 @@ public final class RequiredMod extends Mod {
         super(ops, t);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Text createNotintalledText() {
         return Text.translatable("disconnect.thecoldworldlib.notinstall.requiredmod", modName, version, downloadLink);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Text createWrongVersionText(String currentversion) {
         return Text.translatable("disconnect.thecoldworldlib.wrongversion.requiredmod", modName, version, currentversion, downloadLink);

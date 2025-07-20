@@ -12,8 +12,11 @@
     "MinecraftServerMixin",
     "PlayerManagerMixin",
     "PlayStateFactoriesMixin",
+    "RegistriesMixin",
+    "ServerCommonNetworkHandlerMixin",
     "ServerLoginNetworkHandlerMixin",
     "ServerLoginPacketListenerInjector",
+    "ServerPlayerEntityMixin",
     "ServerPlayNetworkHandlerMixin",
     "ServerPlayPacketListenerInjector"
   ],

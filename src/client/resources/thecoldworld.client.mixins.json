@@ -5,7 +5,7 @@
   "compatibilityLevel": "JAVA_21",
   "client": [
     "ClientLoginNetworkHandlerInjector",
-    "ClientPlayNetworkHandlerInjector",
+    "ClientPlayNetworkHandlerMixin",
     "ConnectScreenMixin",
     "ConnectScreenMixin$connect",
     "MinecraftClientMixin"

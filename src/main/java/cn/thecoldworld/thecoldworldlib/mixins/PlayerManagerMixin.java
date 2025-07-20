@@ -1,6 +1,7 @@
 package cn.thecoldworld.thecoldworldlib.mixins;
 
-import cn.thecoldworld.thecoldworldlib.interfaces.mixin.IHandshakePacketAccesser;
+import cn.thecoldworld.thecoldworldlib.interfaces.mixin.IHandshakePacketAccessor;
+import cn.thecoldworld.thecoldworldlib.interfaces.mixin.IModManagerAccessor;
 import cn.thecoldworld.thecoldworldlib.networking.packet.c2s.HandShakePacket;
 import cn.thecoldworld.thecoldworldlib.submod.ModManager;
 import cn.thecoldworld.thecoldworldlib.submod.OptionalMod;
@@ -25,7 +26,7 @@ public class PlayerManagerMixin {
     @Inject(method = "onPlayerConnect", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/PlayerManager;broadcast(Lnet/minecraft/text/Text;Z)V"))
     public void afterPLayerJoin(ClientConnection connection, ServerPlayerEntity player, ConnectedClientData clientData, CallbackInfo ci) {
         LinkedList<Text> texts = new LinkedList<>();
-        HandShakePacket handShakePacket = ((IHandshakePacketAccesser) connection).getHandshakePacket();
+        HandShakePacket handShakePacket = ((IHandshakePacketAccessor) connection).getHandshakePacket();
         if (ModManager.getInstance().stream().filter(m -> m instanceof OptionalMod).findAny().isEmpty()) return;
         List<OptionalMod> cOptionalMods = handShakePacket.manager.stream().filter(m -> m instanceof OptionalMod).map(m -> (OptionalMod) m).collect(Collectors.toList());
         ModManager.getInstance().stream().filter(m -> m instanceof OptionalMod).map(m -> (OptionalMod) m)
@@ -49,5 +50,6 @@ public class PlayerManagerMixin {
         MutableText maintext = Text.translatable("chat.thecoldworldlib.optionalmod", texts.size());
         texts.forEach(maintext::append);
         connection.send(new GameMessageS2CPacket(maintext, false));
+        ((IModManagerAccessor) player).setModManager(handShakePacket.manager);
     }
 }

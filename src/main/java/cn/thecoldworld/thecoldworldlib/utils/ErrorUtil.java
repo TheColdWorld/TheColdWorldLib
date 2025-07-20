@@ -3,7 +3,7 @@ package cn.thecoldworld.thecoldworldlib.utils;
 import com.mojang.serialization.DataResult;
 import org.jetbrains.annotations.NotNull;
 
-public class ErrorUtil {
+public final class ErrorUtil {
     private ErrorUtil() {
     }
 

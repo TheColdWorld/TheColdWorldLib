@@ -24,14 +24,14 @@ import java.util.Optional;
 
 
 public class Mod {
-    public static final Codec<Mod> CODEC = Codec.of(Mod::write, Mod::decode);
     public static final Map<String, Decoder<? extends Mod>> ModTypes = new HashMap<>(10);
+    public static final Codec<Mod> CODEC = Codec.of(Mod::write, Mod::decode);
     public final String modid;
     public final String version;
     public final String compatibleVersion;
     public final URI downloadLink;
-    protected final VersionPredicate versionPredicate;
     public final String modType;
+    protected final VersionPredicate versionPredicate;
     @Nullable
     public String modName;
 
@@ -164,4 +164,5 @@ public class Mod {
     public String toString() {
         return String.format("ThColdWorldLib.Mod@%s[modid:%s;mod name:%s;mod type:%s;mod compatible version:%s]", Integer.toHexString(hashCode()), modid, modName, modType, compatibleVersion);
     }
+
 }

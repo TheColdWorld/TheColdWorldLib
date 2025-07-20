@@ -1,6 +1,9 @@
 package cn.thecoldworld.thecoldworldlib.submod;
 
+import cn.thecoldworld.thecoldworldlib.interfaces.mixin.IModManagerAccessor;
 import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.crash.CrashException;
 import net.minecraft.util.crash.CrashReport;
 import org.jetbrains.annotations.NotNull;
@@ -83,5 +86,30 @@ public final class ModManager implements Iterable<Mod> {
 
     public boolean isEmpty() {
         return this.Mods.isEmpty();
+    }
+
+    /**
+     * @return {@code false} if not registered or {@code player} don't install the Optional mod,otherwise {@code true}
+     */
+    public boolean isHaveOptionalMod(ServerPlayerEntity player, OptionalMod mod) {
+        if (!Mods.contains(mod)) return false;
+        return ((IModManagerAccessor) player).getModManager().get(mod.modid).isPresent();
+    }
+
+    /**
+     * @return {@code false} if not registered as an optional mod or {@code player} don't install the Optional mod,otherwise {@code true}
+     */
+    public boolean isHaveOptionalMod(ServerPlayerEntity player, ModContainer mod) {
+        if (Mods.stream().filter(m -> m instanceof OptionalMod).noneMatch(m -> m.modid.equals(mod.getMetadata().getId())))
+            return false;
+        return ((IModManagerAccessor) player).getModManager().stream().anyMatch(m -> m.modid.equals(mod.getMetadata().getId()));
+    }
+
+    /**
+     * @return {@code false} if not registered as an optional mod or {@code player} don't install the Optional mod,otherwise {@code true}
+     */
+    public boolean isHaveOptionalMod(ServerPlayerEntity player, String modid) {
+        if (Mods.stream().filter(m -> m instanceof OptionalMod).noneMatch(m -> m.modid.equals(modid))) return false;
+        return ((IModManagerAccessor) player).getModManager().stream().anyMatch(m -> m.modid.equals(modid));
     }
 }

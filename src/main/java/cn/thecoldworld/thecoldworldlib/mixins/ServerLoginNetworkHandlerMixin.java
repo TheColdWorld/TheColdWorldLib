@@ -1,7 +1,7 @@
 package cn.thecoldworld.thecoldworldlib.mixins;
 
 import cn.thecoldworld.thecoldworldlib.Vars;
-import cn.thecoldworld.thecoldworldlib.interfaces.mixin.IHandshakePacketAccesser;
+import cn.thecoldworld.thecoldworldlib.interfaces.mixin.IHandshakePacketAccessor;
 import cn.thecoldworld.thecoldworldlib.networking.listeners.ServerLoginPacketListener;
 import cn.thecoldworld.thecoldworldlib.networking.packet.c2s.HandShakePacket;
 import cn.thecoldworld.thecoldworldlib.submod.ModManager;
@@ -31,7 +31,7 @@ public abstract class ServerLoginNetworkHandlerMixin implements ServerLoginPacke
     @Override
     @Unique
     public void TheColdWorldLib$OnHandShake(HandShakePacket packet) {
-        ((IHandshakePacketAccesser) connection).setHandshakePacket(packet);
+        ((IHandshakePacketAccessor) connection).setHandshakePacket(packet);
     }
 
     @Inject(method = "sendSuccessPacket", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/ClientConnection;send(Lnet/minecraft/network/packet/Packet;)V"), cancellable = true)
@@ -40,7 +40,7 @@ public abstract class ServerLoginNetworkHandlerMixin implements ServerLoginPacke
             this.connection.send(new LoginDisconnectS2CPacket(reason));
             this.connection.handleDisconnection();
         };
-        HandShakePacket handShakePacket = ((IHandshakePacketAccesser) connection).getHandshakePacket();
+        HandShakePacket handShakePacket = ((IHandshakePacketAccessor) connection).getHandshakePacket();
         if (handShakePacket == null) {
             disconnect.accept(Text.literal("[TheColdWorldLib] mod TheColdWorldLib is not installed\nThis Server requires version " + Vars.MOD_VERSION + "\n install it from https://modrinth.com/project/thecoldworldlib"));
             ci.cancel();
@@ -60,7 +60,6 @@ public abstract class ServerLoginNetworkHandlerMixin implements ServerLoginPacke
                     if (!mod.isCompatible(opt.get())) {
                         disconnect.accept(mod.createWrongVersionText(opt.get().version));
                         ci.cancel();
-                        return;
                     }
                 });
             }

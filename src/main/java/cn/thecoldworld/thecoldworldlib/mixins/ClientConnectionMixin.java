@@ -1,13 +1,13 @@
 package cn.thecoldworld.thecoldworldlib.mixins;
 
-import cn.thecoldworld.thecoldworldlib.interfaces.mixin.IHandshakePacketAccesser;
+import cn.thecoldworld.thecoldworldlib.interfaces.mixin.IHandshakePacketAccessor;
 import cn.thecoldworld.thecoldworldlib.networking.packet.c2s.HandShakePacket;
 import net.minecraft.network.ClientConnection;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(ClientConnection.class)
-public class ClientConnectionMixin implements IHandshakePacketAccesser {
+public class ClientConnectionMixin implements IHandshakePacketAccessor {
     @Unique
     HandShakePacket handShakePacket = null;
 
