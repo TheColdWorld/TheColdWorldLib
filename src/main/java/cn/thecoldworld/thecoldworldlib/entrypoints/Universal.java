@@ -1,6 +1,9 @@
 package cn.thecoldworld.thecoldworldlib.entrypoints;
 
 import cn.thecoldworld.thecoldworldlib.Vars;
+import cn.thecoldworld.thecoldworldlib.config.CommonConfig;
+import cn.thecoldworld.thecoldworldlib.config.ConfigManager;
+import cn.thecoldworld.thecoldworldlib.config.ExceptionConfig;
 import cn.thecoldworld.thecoldworldlib.debug.DebugMessage;
 import cn.thecoldworld.thecoldworldlib.debug.DebugVars;
 import cn.thecoldworld.thecoldworldlib.networking.CommonPacketMetadata;
@@ -24,6 +27,8 @@ public class Universal implements ModInitializer {
     @Override
     public void onInitialize() {
         ModManager.initialize();
+        ConfigManager.getInstance().register(new CommonConfig());
+        ConfigManager.getInstance().register(new ExceptionConfig());
         if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
             try {
                 OptionalMod mod = new OptionalMod(Vars.MODID, "=0.0.3", new URI("https://modrinth.com/project/thecoldworldlib"));

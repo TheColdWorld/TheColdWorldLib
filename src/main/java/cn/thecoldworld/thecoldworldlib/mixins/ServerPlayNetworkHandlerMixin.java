@@ -1,5 +1,7 @@
 package cn.thecoldworld.thecoldworldlib.mixins;
 
+import cn.thecoldworld.thecoldworldlib.config.ConfigManager;
+import cn.thecoldworld.thecoldworldlib.config.ExceptionConfig;
 import cn.thecoldworld.thecoldworldlib.exceptions.SerializedException;
 import cn.thecoldworld.thecoldworldlib.exceptions.ServerBindPacketException;
 import cn.thecoldworld.thecoldworldlib.interfaces.mixin.IGetClientConnection;
@@ -21,8 +23,13 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.time.Instant;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 @Mixin(ServerPlayNetworkHandler.class)
 public class ServerPlayNetworkHandlerMixin implements ServerPlayPacketListener {
@@ -48,6 +55,24 @@ public class ServerPlayNetworkHandlerMixin implements ServerPlayPacketListener {
 
     @Override
     public <T> void TheColdWorldLib$exception(CommonPlayS2CPacket<T> exceptionPacket, SerializedException exception, long time) {
-        LOGGER.error("Client occored exception {} at {} in package{},message{}", exception.className, Instant.ofEpochSecond(time).atZone(ZoneId.systemDefault()), exceptionPacket.getMetadata().packetID, exception.message);
+        ConfigManager manager = ConfigManager.getInstance();
+        ExceptionConfig exceptionConfig = manager.getOrElse(ExceptionConfig.ID, ExceptionConfig.class, ExceptionConfig::new);
+        if (exceptionConfig.is_WritePacketExceptionToFile()) {
+            File file;
+            if (Path.of(exceptionConfig.get_exceptionFileStoreDir()).isAbsolute()) {
+                file = Path.of(exceptionConfig.get_exceptionFileStoreDir(),
+                        Instant.ofEpochSecond(time).atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd-hh-ss"))
+                                + "-" + exception.className + "-Client.txt").toFile();
+            } else
+                file = Objects.requireNonNull(player.getServer()).getRunDirectory().resolve("TheColdWorldLib/exceptions/" +
+                        Instant.ofEpochSecond(time).atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd-hh-ss"))
+                        + "-" + exception.className + "-Client.txt").toFile();
+            try {
+                exception.writeToFile(file);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        LOGGER.error("Client occurred exception {} at {} in packet {},message:{}", exception.className, Instant.ofEpochSecond(time).atZone(ZoneId.systemDefault()), exceptionPacket.getMetadata().packetID, exception.message);
     }
 }

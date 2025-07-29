@@ -26,7 +26,7 @@ public class ExceptionS2CPacket implements Packet<ClientPlayPacketListener> {
     public ExceptionS2CPacket(CommonPlayC2SPacket<?> exceptionPacket, Throwable cause) {
         time = Instant.now().getEpochSecond();
         this.exceptionPacket = exceptionPacket;
-        this.exception = new SerializedException(cause);
+        this.exception = new SerializedException(cause, time);
     }
 
     protected ExceptionS2CPacket(RegistryByteBuf buf) {
